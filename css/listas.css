@@ -1,0 +1,83 @@
+#informacion ul {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	text-align: justify;
+	color: #FFFFCC;
+	font-weight: bold;
+	font-size: 1.2em;	
+	margin: 15px 20px 0px 30px;
+}
+
+#divgrupos
+{
+margin-left: auto;
+margin-right: auto;
+margin-bottom: 10px;
+margin-top: 20px;
+border-top: 1px solid #999;
+z-index: 1;
+}
+
+#divgrupos ul
+{
+list-style-type: none;
+text-align: center;
+margin-top: -8px;
+font-weight: bold;
+font-size: 1em;
+padding: 0;
+position: relative;
+z-index: 2;
+}
+
+#divgrupos li
+{
+display: inline;
+text-align: center;
+margin: 0 2px;
+}
+
+#divgrupos li a
+{
+padding: 1px 7px;
+color: #000;
+background-color: #fff;
+border: 2px solid #ccc;
+text-decoration: none;
+}
+
+#divgrupos li a:hover
+{
+color: #000;
+border: 1px solid #666;
+border-top: 5px solid #0C7F1C;
+border-bottom: 5px solid #0C7F1C;
+}
+
+#divgrupos li a#current
+{
+color: #000;
+border: 1px solid #666;
+border-top: 2px solid #666;
+border-bottom: 2px solid #666;
+}
+
+/* ============================================ */
+
+#listacampos ul
+{
+        color: #000000;
+        list-style-type:none;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	text-align: justify;
+	font-weight: bold;
+	font-size: 1.2em;	
+	margin: 15px 20px 0px 30px;  
+}
+
+#listacampos ul li
+{
+background-image: url("../imagenes_plantilla/okthumb.png");
+background-repeat:no-repeat;
+background-position:0px 3px; 
+padding-left:18px;
+}

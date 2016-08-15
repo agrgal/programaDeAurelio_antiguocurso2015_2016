@@ -1,0 +1,187 @@
+<!-- ********************************* -->
+<!-- **** Menú principal superior **** -->
+<!-- ********************************* -->
+
+<div id="menu">
+	<ul>
+		<li><a href="./index.php?<? echo session_name().'='.session_id(); ?>" onmouseover="javascript: ocultar()">Inicio</a></li>
+  <?php 
+  if ($_SESSION['administracion']>=1) { // para los profesores ?>
+	 <li id="litres"><a href="#" onmouseover="javascript: ocultar(); toogle('litres','menu4',event)">Clases</a></li>
+  <?php } 
+
+  if ($_SESSION['administracion']>=1) { // para los profesores ?>
+	 <li id="licuatro"><a href="#" onmouseover="javascript: ocultar(); toogle('licuatro','menu5',event)">Notas</a></li>
+
+  <?php } 
+  if ($_SESSION['administracion']>=2 && $_SESSION['tutorada']==1) { // para el tutor ?>
+	 <li id="lidos"><a href="#" onmouseover="javascript: ocultar(); toogle('lidos','menu3',event)">Tutoría</a></li>
+  <?php } 
+  if ($_SESSION['administracion']==3) { // para el administrador ?>
+         <li id="liuno"><a href="#" onmouseover="javascript: ocultar(); toogle('liuno','menu2',event)">Edición</a></li>
+  <?php } ?>
+		
+		<li><a href="./ayuda.php?<? echo session_name().'='.session_id(); ?>" onmouseover="javascript: ocultar()">Ayuda</a></li>
+	</ul>
+</div>
+
+<div id="pequenno">
+   <?php 
+   $profsimulado=cambiarnombre(dado_Id($bd,$_SESSION['profesor'],"Empleado","tb_profesores","idprofesor"));
+   if ($_SESSION['administracion']==3) {        
+       $profadministrador=cambiarnombre(dado_Id($bd,$_SESSION['administrador'],"Empleado","tb_profesores","idprofesor"));
+       $escribeestado="Sesión de administración (".$profadministrador."). Edito como \"".$profsimulado."\""; 
+   } else if ($_SESSION['administracion']<3 && $_SESSION['administracion']>0) { 
+       $escribeestado="Sesión como profesor/a. Profesor/a: ".$profsimulado; 
+   } else {
+       $escribeestado="Sesión no inicializada. Vuelve a la pág. ÍNDICE si no te encuentras en ella.";
+   }
+   echo '<p class="normal">'.$escribeestado.'</p>';
+   ?>   
+</div>
+
+
+<!-- ******************************* -->
+<!-- **** Menú 2. Administrador **** -->
+<!-- ******************************* -->
+<div id="menu2" class="menu2" onclick="javascript: toogle(\'menu2\')" style="position: absolute; display: none; 
+height: auto; z-index: 12; background-color: transparent; border: 2px none black;">
+<!-- <div id="menu2" class="menu3" onclick="javascript: toogle(\'menu2\')" style="position: absolute; display: none; 
+left: 500px; top: 150px; height: auto; z-index: 12; background-color: transparent; border: 2px none black;"> --> 
+
+        <?php if ($_SESSION['administracion']==3) { // para el administrador
+        echo '
+	<ul>
+		<li><a href="./edicioneditaprofesores.php">Edita la lista de profesores</a></li>
+		<li><a href="./edicionrecuperaprofesores.php">Recupera profesores desde un fichero</a></li>
+		<li><a href="./edicioneditaalumnos.php">Edita la lista de alumnos</a></li>
+		<li><a href="./edicionrecuperaalumnos.php">Recupera alumnos desde un fichero</a></li>
+		<li><a href="./edicioneditaasignaturas.php">Edita la lista de asignaturas</a></li>
+                <li><a href="./editevaluaciones.php">Editar evaluaciones</a></li>
+		<li><a href="./edititems.php">Editar items evaluativos</a></li>
+		<li><a href="./edicionlistaevaluaciones.php">Editar períodos de evaluación</a></li>
+		<li><a href="./edicionlistacompetencias.php">Editar listado de competencias</a></li>
+		<li><a href="./copiabd.php">Realiza Copia Seguridad Base de Datos</a></li>
+		<li><a href="./recuperabd.php">Restaura una copia de seguridad que hayas hecho antes</a></li>
+		<!-- <li><a href="./itemscienejemplos.php">Rellena la tabla con 100 ejemplos</a></li> -->
+                <li><a href="./cerrarasignacion.php">Deniega/permite la posibilidad de incluir asignaciones</a></li>
+                <!-- <li><a href="./temporalpasardatos.php">Temporal pasar datos</a></li> -->
+	</ul>';
+        } ?>
+
+</div>
+
+
+
+<!-- *********************** -->
+<!-- **** Menú 3. Tutor **** -->
+<!-- *********************** -->
+<div id="menu3" class="menu2" onclick="javascript: toogle('menu3')" style="position: absolute; display: none; 
+height: auto; z-index: 13; background-color: transparent; border: 2px none black;">
+
+        <?php if ($_SESSION['administracion']>=2 && $_SESSION['tutorada']==1) { // para el tutor 
+        echo '
+	<ul>
+		<li><a href="./veralumnado.php">Lista de clase</a></li>		
+		<li><a href="./guardardatosinicialestutoria.php">Filtro por evaluación</a></li>
+		<li><a href="./veruno.php?boton=Primero">Datos por alumno/a, dada evaluación. Todas las asignaciones.</a></li>
+		<li><a href="./verdos.php?boton=Primero">Datos por asignación (materia-profesor/a), dada evaluación. Todos los alumnos/as.</a></li>
+		<li><a href="./vertres.php?boton=Primero">Por item, dada evaluación. Todos los alumnos/as y profesores.</a></li>
+		<li><a href="./resumenes.php">Tablas Resumen</a></li>
+                <li><a href="./emailaviso.php">Enviar email de aviso a los profesores/as de mi tutoría</a></li>
+                <li><a href="./veranotaciones.php">Anotaciones en mi tutoría</a></li>
+	</ul>'
+;
+        } ?>
+
+</div>
+
+<!-- **************** -->
+<!-- **** Menú 4 **** -->
+<!-- **************** -->
+<div id="menu4" class="menu2" onclick="javascript: toogle(\'menu4\')" style="position: absolute; display: none; 
+height: auto; z-index: 13; background-color: transparent; border: 2px none black;">
+
+        <?php if ($_SESSION['administracion']>=1) { // para los profesores 
+        echo '
+	<ul>
+		<li><a href="./guardarasignaciones.php">Mis asignaciones y mi evaluación</a></li>
+		<!-- <li><a href="./guardardatos.php?boton=Primero">Guarda datos de una clase (formulario antiguo)</a></li> -->
+		<li><a href="./guardardatosdos.php?boton=Primero">Guarda datos de una clase (formulario nuevo)</a></li>
+                <li><a href="./opiniongeneral.php">Opinión general de una asignación (profesor-materia-curso o cursos)</a></li> 
+		<li><a href="./guardardatosprofesor.php">Mis datos (cambio contraseña y correo electrónico)</a></li>  
+		<li><a href="./anotaciones.php">Anotaciones puntuales sobre alumnos/as</a></li>                             
+	</ul>';
+        } ?>
+
+</div>
+
+<!-- **************** -->
+<!-- **** Menú 5 **** -->
+<!-- **************** -->
+<div id="menu5" class="menu2" onclick="javascript: toogle(\'menu5\')" style="position: absolute; display: none; 
+height: auto; z-index: 13; background-color: transparent; border: 2px none black;">
+
+        <?php if ($_SESSION['administracion']>=1) { // para los profesores 
+        echo '
+
+	<ul>
+		<li><a href="./notasmisindicadores.php">Mis indicadores</a></li>
+		<li><a href="./notasmisinstrumentosevaluativos.php">Mis instrumentos evaluativos</a></li>
+                <li><a href="./notasmisconceptosevaluativos.php">Mis conceptos evaluativos</a></li>
+                <li><a href="./notas.php">Mis notas</a></li>
+	</ul>';
+        } ?>
+
+</div>
+
+<!-- ***************** -->
+<!-- **** SCRIPTS **** -->
+<!-- ***************** -->
+<script language="javascript">
+function toogle(idparent,id,event) {        
+        var pos = getAbsoluteElementPosition(idparent);
+        // alert(pos.left);
+        var coordX = parseInt(pos.left-10)+"px";
+	obj = document.getElementById(id);
+	if (obj.style.display=="") {
+		obj.style.display="none";
+	} else {
+		// if (id=="menu2") {iz="483px"; tp="200px";}
+		// if (id=="menu3") {iz="385px"; tp="200px";}
+		// if (id=="menu4") {iz="300px"; tp="200px";}
+                if (id=="menu2") {iz=coordX; tp="200px";}
+		if (id=="menu3") {iz=coordX; tp="200px";}
+		if (id=="menu4") {iz=coordX; tp="200px";}
+		if (id=="menu5") {iz=coordX; tp="200px";}
+		obj.style.left=iz;
+                obj.style.top=tp;
+		obj.style.width="auto";
+		obj.style.display="";
+	}
+}
+
+function ocultar() {
+	document.getElementById('menu2').style.display="none";
+	document.getElementById('menu3').style.display="none";
+	document.getElementById('menu4').style.display="none";
+	document.getElementById('menu5').style.display="none";
+}
+
+// Obtiene la posición de un elemento en la página
+function getAbsoluteElementPosition(element) {
+  if (typeof element == "string")
+    element = document.getElementById(element)
+    
+  if (!element) return { top:0,left:0 };
+  
+  var y = 0;
+  var x = 0;
+  while (element.offsetParent) {
+    x += element.offsetLeft;
+    y += element.offsetTop;
+    element = element.offsetParent;
+  }
+  return {top:y,left:x};
+}
+</script>

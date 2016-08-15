@@ -1,0 +1,34 @@
+#calendario td {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	text-align: center;
+	color: #33FF00;
+	background-color: #006600;
+	font-weight: bold;
+	font-size: 0.8em;	
+	margin: 2px;
+}
+
+#calendario th {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	text-align: center;
+	color: #000000;
+	background-color: #FFFF00;
+	font-weight: bolder;
+	font-size: 0.8em;	
+	margin: 2px;
+}
+
+#calendario table {
+	border: 2px solid orange;
+	vertical-align: top;
+}
+
+#calendario tr {
+	vertical-align: top;
+}
+
+.resaltado td {
+	color: #FFFF00;
+	background-color: #CC0000;
+	
+}

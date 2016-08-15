@@ -1,0 +1,187 @@
+<?php
+include("./funciones/funciones.php"); /* incluye el directorio de funciones */
+
+include_once("./clases/class.micalendario.php");
+$calendario= New micalendario(); // variable de calendario.
+
+/* $bd="encyclonumber"; */ //debe de haberse cargado en mysql_inc.php
+
+session_start(); /* empiezo una sesión */
+
+if ($_SESSION['administracion']<1) {
+   echo header("Location: ./index.php");
+}
+
+// Si es el administrador, para que pueda tener un profesor
+if ($_SESSION['administracion']==3) 
+   {$_SESSION['profesor']=dado_Id($bd,"31667329D","idprofesor","tb_profesores","DNI");} //me pongo yo
+
+// Haber rellenado antes los datos iniciales..
+if (isset($_SESSION['evaluacion']) && isset($_SESSION['unidad']) && isset($_SESSION['materia']) && isset($_SESSION['profesor'])) { //si se han activado todas las variables de sesión
+   $visualizacion=1;
+} else { header ("Location: ./guardardatosiniciales.php");}
+
+// obtiene arrays, por si hay que usarlos más de una vez
+$alumno=obtenerclase($bd,$_SESSION['unidad']); // array para introducir datos de los alumnos
+$ii=count($alumno['idalumno']);
+$items=obteneritems($bd);
+
+// Ahora sí, reconocimiento de botones
+if (isset($_GET['boton']) && $_GET['boton']=='Primero') {$_SESSION['contador']=0;}
+if (isset($_GET['boton']) && $_GET['boton']=='Atrás') {$_SESSION['contador']--;}
+if (isset($_GET['boton']) && $_GET['boton']=='Adelante') {$_SESSION['contador']++;}
+if (isset($_GET['boton']) && $_GET['boton']=='Último') {$_SESSION['contador']=1000;}
+if (isset($_GET['boton']) && $_GET['boton']=='Grabar') {$_SESSION['contador']=$_SESSION['contador'];}
+if (isset($_GET['marcar']) ) {
+	if(!empty($_GET['marcar']['name'])) {$grupomarcado=$_GET['marcar']['name'];} else {$grupomarcado="";}
+	if(!empty($_GET['marcar']) && $_GET['marcar']=='P') {$sentidomarcado=1;}
+	if(!empty($_GET['marcar']) && $_GET['marcar']=='N') {$sentidomarcado=0;}
+}
+if (isset($_GET['contador']) && $_GET['contador']>=0) {$_SESSION['contador']=$_GET['contador'];}
+
+// Importante, asignación de alumnado y cadena de valores
+// Del alumno que viene
+/* if (isset($_GET['al1']) && $_GET['al1']>0) {
+	// $cadena=$_GET['al1'];
+	$cadena="";	
+	for ($j=0;$j<count($items['iditem']);$j++) {
+		// $cadena.="#".$j;		
+		if (isset($_GET[$items['iditem'][$j]]) && $_GET[$items['iditem'][$j]]=="Sí") {
+			$cadena.="#".$items['iditem'][$j];
+		}
+        }
+// hay que grabar la cadena, super-importante
+$cadena=substr($cadena,1,strlen($cadena)-1); // Quito la primera almohadilla
+escribecadena($bd,$calendario->fechadehoy(),$_SESSION['unidad'],$_SESSION['profesor'],$_SESSION['materia'],$_GET['al1'],$_SESSION['evaluacion'],$cadena,$_GET['observaciones']);
+} // fin del if get */
+
+$iz = "left: 300px;" ; // posición de los campos a la izquierda
+
+?>
+<html>
+<head>
+<title>Introduce datos del alumnado</title>
+
+<meta http-equiv="Content-Type" content="text/html;">
+<!-- Inclyo las diferentes hojas de estilo -->
+<?php include_once("./listas_de_css.php"); ?>
+</head>
+<body>
+<!-- Capas de presentación
+<div id="grupo" style="position: absolute; left: 0px; top: 0px; width: 960; height: auto; z-index: 1; line-height: 14px"><img name="fondo" src="./imagenes_plantilla/plantilla.png" width="960" height="auto" border="0" alt=""></div>-->
+
+<!-- Capa de menú: navegación de la página -->
+<?php include_once("./lista.php"); ?>
+
+<!-- Capa de estado: información útil -->
+<div id="fecha">
+	<p style="text-align: center;">
+	<? 
+	echo 'Fecha: '.$calendario->fechaformateada($calendario->fechadehoy());
+	echo '<br>Hora: '.$calendario->horactual();
+	?></p>
+</div>
+
+<!-- Capa de información -->
+<div id="informacion" onmouseover="javascript: ocultar()">
+	<a name="anclajenombre" id="a"></a>
+	<h1>Guarda items de cada alumno/a. Curso: <?php echo $_SESSION['unidad'];?></h1>
+	<p>Profesor: <?php echo dado_Id($bd,$_SESSION['profesor'],"Empleado","tb_profesores","idprofesor").'  - Materia: '.dado_Id($bd,$_SESSION['materia'],"Materias","tb_asignaturas","idmateria");?></p>
+		  
+		  <!-- *********************************************-->
+		  <!-- Formulario de introducción de datos -->
+		  <!-- Visualización de datos -->
+		  <!-- *********************************************-->
+
+<form name="guardardatos" action="./guardardatos.php#anclajenombre" method="get">
+<?php 
+if ($visualizacion==1) { // activadas todas las opciones de visualizacion
+	echo '<p>'.$grupomarcado.' '.$sentidomarcado.'</p>';
+        // modificación del contador
+	if ($_SESSION['contador']>$ii-1) {$_SESSION['contador']=$ii-1;} //Si supera este valor
+	if ($_SESSION['contador']<0) {$_SESSION['contador']=0;} //Si es menor que cero
+?>
+	 <p style="text-align: center;">	
+	<select name="select" class="botones" id="select2"
+	  onChange = "window.location.href = this.options[selectedIndex].value; this.selectedIndex=0;">
+	  <option value="">Elige un alumno/a</option>
+		<?php 
+		$link=Conectarse($bd); // y me conecto. //dependiendo del tipo recupero uno u otro.
+		$Sql='SELECT idalumno,alumno from tb_alumno WHERE unidad="'.$_SESSION['unidad'].'"ORDER BY alumno';
+		$result=mysql_query($Sql,$link); // ejecuta la cadena sql y almacena el resultado el $result
+		$j=0;	
+		while ($row=mysql_fetch_array($result)) {
+			echo '<option value="./guardardatos.php?contador='.$j.'#anclajenombre">';
+			echo $row['alumno'].'</option>';
+			$j++;
+			}
+		mysql_free_result($result);
+		?>
+        </select>
+	</p>
+        <p style="text-align: center;">
+	<input name="boton" class="botones" id="boton" value="Primero" type="submit" alt="Ir al primer registro" title="Ir al primer registro"  >
+	<input name="boton" class="botones" id="boton" value="Atrás" type="submit" alt="Ir al registro anterior" title="Ir al registro anterior">
+	<?php echo " ".$alumno['alumno'][$_SESSION['contador']]." (".$alumno['idalumno'][$_SESSION['contador']].") "; ?>
+	<input name="al1" class="botones" id="al1" type="hidden" value="<?php echo $alumno['idalumno'][$_SESSION['contador']]; ?>" >
+	<input name="boton" class="botones" id="boton" value="Adelante" type="submit" title="Ir al siguiente registro" alt="Ir al siguiente registro">
+	<input name="boton" class="botones" id="boton" value="Último" type="submit" title="Ir al último registro" alt="Ir al último registro">
+	<input name="boton" class="botones" id="grabar" value="Grabar" type="submit" title="Grabar datos" alt="Grabar datos">
+        <a href="./verdospdfprofesor.php" class="botones" id="pdf" alt="Genera PDF">&nbsp;PDF&nbsp;</a>
+	<br>
+	</p> 
+	<div style="margin: 10px 5px 1px 5px;"><big style="font-weight: bold; color: rgb(102, 102, 52)">Observaciones:&nbsp;&nbsp;</big>
+	<textarea name="observaciones" class="cajones" cols="60" rows="3" style="<?php echo $iz; ?> vertical-align: middle; font-size:14px;" height="auto" id="observaciones"><?php echo recuperaobservaciones($bd,$_SESSION['unidad'],$_SESSION['profesor'],$_SESSION['materia'],$alumno['idalumno'][$_SESSION['contador']],$_SESSION['evaluacion']);?></textarea></span>
+	</div>	
+
+	<!-- Dentro de un div una lista de acciones -->
+        <div style="margin: 10px 5px 1px 5px; border: 1px solid black;" float="none">
+              <?php 
+                $listagrupos=array();
+	 	for ($i=0;$i<=2;$i++) {
+                $grupo=obtenergrupos($bd,$i);
+                foreach ($grupo['grupo'] as $agrupacion) {
+                   $listagrupos[]=$agrupacion;
+                } } // guarda todo en la variable listagrupos
+		$cadenadivs=implode("***",$listagrupos);
+		// lista de bullets
+                echo '<ul>'; 
+                foreach($listagrupos as $titulo) {
+                     echo '<li><a id="lista'.$titulo.'" onClick="ocultadiv();">'.$titulo.'</a></li>';
+                }
+                echo '</ul>';
+              ?>          
+        </div>
+        <?php
+        foreach($listagrupos as $titulo) {
+        echo '<div id="'.$titulo.'" style="margin: 10px 5px 1px 5px; border: 1px solid black;" float="none">';
+	    echo '<p>'.$titulo.'</p>';
+        echo '</div>';
+        }
+        ?>
+
+<?php        
+	// obtiene la cadena de los items que ya están puestos
+	// $yapuestos = recuperacadenaarray($bd,$_SESSION['unidad'],$_SESSION['profesor'],$_SESSION['materia'],$alumno['idalumno'][$_SESSION['contador']],$_SESSION['evaluacion']);
+	// $grupo=obtenergrupos($bd,0); --> Otra función
+	// jsarraytodonada($bd,$agrupacion,$nom); jsarray($bd,$agrupacion,$nom,0);
+
+?>
+
+<?php  //Acaba la visualización
+} else { // si no se puede visualizar
+        echo '<h2>Imposible visualizar los datos</h2>';
+} ?>
+        
+</form> <!-- Fin del form -->
+</div> <!-- FIN DE LA Capa de información -->
+
+<!-- ****************** -->
+<!--       Script       -->
+<!-- ****************** -->
+<script type="text/javascript" language="javascript">
+
+function ocultadiv() {
+   var cadena = '<?php echo $cadenadivs; ?>';
+   var trozos = cadena.split(",");
+   var div = document.getElementById(

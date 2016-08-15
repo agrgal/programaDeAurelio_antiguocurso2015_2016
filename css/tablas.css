@@ -1,0 +1,46 @@
+.tabla th {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	text-align: justify;
+	color: #000066;
+	background-color: #DDD5F9;
+	font-weight: bolder;
+	font-size: 1em;	
+	margin: 1px;
+}
+
+.tabla td {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	text-align: left;
+	color: #000000;
+	background-color: #FFFFFF;
+	vertical-align: middle;
+	font-weight: bold;
+	font-size: 1em;	
+	margin: 1px;
+}
+
+.tabla table {
+	border: 2px solid blue;
+	margin: 0px 20px;
+	vertical-align: top;
+}
+
+.tabla tr {
+	vertical-align: top;
+}
+
+.tabla caption {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	text-align: center;
+	color: #000000;
+	background-color: #FFFFCC;
+	font-weight: bolder;
+	font-size: 1em;	
+	margin: 2px;
+}
+
+.resaltado td {
+	color: #FFFF00;
+	background-color: #CC0000;
+	
+}

@@ -1,0 +1,5 @@
+<?
+$mysql_server="localhost";
+$mysql_login="pepe";
+$mysql_pass="pepa";
+?>

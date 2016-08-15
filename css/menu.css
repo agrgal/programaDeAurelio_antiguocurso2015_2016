@@ -1,0 +1,84 @@
+/* CSS Document */
+
+/******************/
+/* menú principal */
+/* ============== */
+
+#menu ul {
+	font: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 1.8em; 
+	font-weight: bold;
+	font-style: oblique;
+	list-style-type: none;
+	text-align: left;
+	margin: 4px 0px 0px 0px; /* esto lo centra dentro de la capa menú */
+	padding-left: 0.5em; /* Margen Inicial */
+}
+
+#menu li {
+	display: inline;
+	padding-right: 0.5em; /* Separación entre Iconos */
+}
+
+#menu ul li a
+{
+text-decoration: none;
+color: #000000;
+background-color: transparent;
+}
+
+#menu ul li a:hover
+{
+color: #0099FF;
+background-color: transparent;
+}
+
+/*******************/
+/* menú secundario */
+/* =============== */
+
+.menu2 ul {
+	font: "Comic Sans MS",Times New Roman;
+	font-size: 1.2em; 
+	font-weight: bold;
+	font-style: oblique;
+	list-style-type: none;
+	text-align: left;
+	margin: 0px;
+	_margin-left: 0px;
+
+}
+
+.menu2 li {
+	display: block;	
+	margin: 0.25em 0px 0.25em -2em;
+	_margin: 0.25em 0px 0.25em 0em;
+	padding: 3px;
+	background-color: #FFFFCC;
+}
+
+.menu2 ul li a
+{
+text-decoration: none;
+color: #003300;
+margin: 5px;
+}
+
+.menu2 ul li a:hover
+{
+color: #CC0000;
+}
+
+/*******************/
+/* pequeño */
+/* =============== */
+
+#pequenno .normal {
+  text-align: justify;
+  font-size: 1.2em;
+  margin: 0px 0px 20px 10px;
+  font-weight: bold;
+  color: #61380B;
+}
+
+

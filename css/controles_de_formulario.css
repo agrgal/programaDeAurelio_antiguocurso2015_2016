@@ -1,0 +1,287 @@
+.botones {
+	background-color: #DDD5F9;
+	font-size: 1.1em;
+	border-style: outset;
+        text-align: center;
+	_border-style: solid;
+	border-color: #FFFFFF;
+	border-width: 3px;
+	padding: 0.8em 0em 0.8em -0.3em; /* el -0.3 viene bien para que queden los desplegables en condiciones */
+	margin: 0.8em 0 0 0.8em;
+	_padding: 1px;
+	_margin: 1px 0 0 1px;
+	color: #000066;
+	font-weight: bold;
+} 
+
+.botones:hover {
+	border-style: inset;
+	_border-style: solid;
+	color: #000066;
+	background-color: #DDD5F9;
+} 
+
+.botonesdos {
+	background-color: #DDD5F9;
+	font-size: 1.6em;
+        text-align: center;
+	border-style: outset;
+	_border-style: solid;
+	border-color: #FFFFFF;
+	border-width: 3px;
+	padding: 0.8em 0em 0.8em -0.3em; /* el -0.3 viene bien para que queden los desplegables en condiciones */
+	margin: 0.8em 0 0 0.8em;
+	_padding: 1px;
+	_margin: 1px 0 0 1px;
+	color: #000066;
+	font-weight: bold;
+} 
+
+.botonesdos:hover {
+	border-style: inset;
+	_border-style: solid;
+	color: #000066;
+	background-color: #DDD5F9;
+} 
+
+/* =================================== */
+
+.cajones {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	width: auto;
+	_height: auto;
+	font-size: 1em;
+	background-color: #F2F3A9; 
+	text-align: left;
+	border-style: none;
+	_border-style: none;
+	border-width: medium;
+	_border-width: thin;
+	border-bottom-style: solid;
+	border-bottom-color: #F3ABA9;
+	border-bottom-color: #99FF99;
+	padding: 0.2em;
+	_padding: 3px;
+	margin: 0.2em 0em 0 0.2em;
+	left: 150px;
+	color: #006600; 
+	font-weight: bold;
+} 
+
+.cajones:hover {
+	border-bottom-style: solid;
+	border-right-color: #B7A9F3;
+	border-right-style: solid;
+}
+
+/* =================================== */
+
+.imagenuno {
+        background:url('../imagenes/otros/annade_clase.png') no-repeat; 
+        border:none; 
+        width: 398px; 
+        height: 112px; 
+        }
+
+.imagenuno:hover {
+        background:url('../imagenes/otros/annade_clase_hover.png') no-repeat; 
+        border-bottom-style: solid;
+	border-bottom-color: #848484;
+	border-right-style: solid;
+	border-right-color: #848484;
+        }
+
+.imagendos {
+        background:url('../imagenes/otros/annade_alumno.png') no-repeat; 
+        border:none; 
+        width: 398px; 
+        height: 112px; 
+        }
+
+.imagendos:hover {
+        background:url('../imagenes/otros/annade_alumno_hover.png') no-repeat; 
+        border-bottom-style: solid;
+	border-bottom-color: #848484;
+	border-right-style: solid;
+	border-right-color: #848484;
+        }
+
+/* =================================== */
+
+.a_demo_one {
+    background-color:#F7933C;
+    padding:10px;
+    position:relative;
+    font-family: 'Open Sans', sans-serif;
+    font-size:12px;
+    text-decoration:none;
+    color:#fff;
+    border: solid 1px #831212;
+    background-image: linear-gradient(bottom, rgb(171,27,27) 0%, rgb(212,51,51) 100%);
+    border-radius: 5px;
+}
+ 
+.a_demo_one:active {
+    padding-bottom:9px;
+    padding-left:10px;
+    padding-right:10px;
+    padding-top:11px;
+    top:1px;
+    background-image: linear-gradient(bottom, rgb(171,27,27) 100%, rgb(212,51,51) 0%);
+}
+
+.a_demo_one::before {
+    background-color:#7D3C04;
+    content:"";
+    display:block;
+    position:absolute;
+    width:100%;
+    height:100%;
+    padding:8px;
+    left:-8px;
+    top:-8px;
+    z-index:-1;
+    border-radius: 5px;
+    box-shadow: inset 0px 1px 1px #909193, 0px 1px 0px #fff;
+}
+
+
+/* ============================ */
+
+.a_demo_two {
+    background-color:#F7933C;
+    padding:10px;
+    position:relative;
+    font-family: 'Open Sans', sans-serif;
+    font-size:12px;
+    text-decoration:none;
+    color:#fff;
+    background-image: linear-gradient(bottom, rgb(100,170,30) 0%, rgb(129,212,51) 100%);
+    box-shadow: inset 0px 1px 0px #F7933C, 0px 6px 0px #7D3C04;
+    border-radius: 5px;
+}
+ 
+.a_demo_two:active {
+    top:7px;
+    background-image: linear-gradient(bottom, rgb(100,170,30) 100%, rgb(129,212,51) 0%);
+    box-shadow: inset 0px 1px 0px #F7933C, inset 0px -1px 0px #7D3C04;
+    color: #156785;
+    text-shadow: 0px 1px 1px rgba(255,255,255,0.3);
+    /* background: rgb(44,160,202); */
+    background: #F7933C;
+}
+
+.a_demo_two::before {
+    background-color:#7D3C04;
+    content:"";
+    display:block;
+    position:absolute;
+    width:100%;
+    height:100%;
+    padding-left:2px;
+    padding-right:2px;
+    padding-bottom:4px;
+    left:-2px;
+    top:5px;
+    z-index:-1;
+    border-radius: 6px;
+    box-shadow: 0px 1px 0px #fff;
+}
+ 
+.a_demo_two:active::before {
+    top:-2px;
+}
+
+/* ============================ */
+
+.a_demo_three {
+    background-color:#F7933C;
+    font-family: 'Open Sans', sans-serif;
+    font-size:12px;
+    text-decoration:none;
+    color:#fff;
+    position:relative;
+    padding:10px 20px;
+    border-left:solid 1px #2ab7ec;
+    margin-left:35px;
+    background-image: linear-gradient(bottom, rgb(44,160,202) 0%, rgb(62,184,229) 100%);
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    box-shadow: inset 0px 1px 0px #2ab7ec, 0px 5px 0px 0px #156785, 0px 10px 5px #999;
+}
+ 
+.a_demo_three:active {
+    top:3px;
+    background-image: linear-gradient(bottom, rgb(62,184,229) 0%, rgb(44,160,202) 100%);
+    box-shadow: inset 0px 1px 0px #2ab7ec, 0px 2px 0px 0px #156785, 0px 5px 3px #999;
+}
+
+.a_demo_three::before {
+    content:"1";
+    width:35px;
+    max-height:29px;
+    height:100%;
+    position:absolute;
+    display:block;
+    padding-top:8px;
+    top:0px;
+    left:-36px;
+    font-size:16px;
+    font-weight:bold;
+    color:#8fd1ea;
+    text-shadow:1px 1px 0px #07526e;
+    border-right:solid 1px #07526e;
+    background-image: linear-gradient(bottom, rgb(10,94,125) 0%, rgb(14,139,184) 100%);
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    box-shadow:inset 0px 1px 0px #2ab7ec, 0px 5px 0px 0px #032b3a, 0px 10px 5px #999 ;
+}
+ 
+.a_demo_three:active::before {
+    top:-3px;
+    box-shadow:inset 0px 1px 0px #2ab7ec, 0px 5px 0px 0px #032b3a, 1px 1px 0px 0px #044a64, 2px 2px 0px 0px #044a64, 2px 5px 0px 0px #044a64, 6px 4px 2px #0b698b, 0px 10px 5px #999 ;
+}
+
+/* Botón tipo 4. Muy chulo */
+
+.a_demo_four {
+    background-color:#F7933C;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-size:1.4em;
+    text-decoration:none;
+    position:relative;
+    padding:10px 20px;
+    padding-right:60px;
+    background-image: linear-gradient(bottom, rgb(210,94,125) 0%, rgb(214,139,184) 100%);
+    border-radius: 5px;
+    box-shadow: inset 0px 1px 0px #9e8d84, 0px 5px 0px 0px #7D3C04, 0px 10px 5px #999;
+}
+ 
+.a_demo_four:active {
+    top:3px;
+    background-image: linear-gradient(bottom, rgb(62,51,46) 100%, rgb(101,86,78) 0%);
+    box-shadow: inset 0px 1px 0px #9e8d84, 0px 2px 0px 0px #7D3C04, 0px 5px 3px #999;
+}
+ 
+.a_demo_four::before {
+    background-color:#7D3C04;
+    background-image:url(../imagenes/otros/2.png);
+    background-repeat:no-repeat;
+    background-position:center center;
+    content:"";
+    width:20px;
+    height:20px;
+    position:absolute;
+    right:15px;
+    top:50%;
+    margin-top:-11px;
+    border-radius: 25%;
+    box-shadow: inset 0px 1px 0px #19120f, 0px 1px 0px #827066;
+}
+ 
+.a_demo_four:active::before {
+    top:50%;
+    margin-top:-12px;
+    box-shadow: inset 0px 1px 0px #827066, 0px 3px 0px #19120f, 0px 6px 3px #382e29;
+}
+

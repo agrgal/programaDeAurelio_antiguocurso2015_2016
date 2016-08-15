@@ -1,0 +1,244 @@
+p {
+  font-size:10px;
+}
+
+h1 {
+  font-size: 12px;
+  font-weight: bold;
+  text-align:center;
+}
+
+h2 {
+  font-size: 11px;
+  font-weight: bold;
+  text-align:center;
+}
+
+.titulo, .alaizquierda {
+  text-align: center;
+  font-size: 1.5em;
+  margin: 2px;
+  word-wrap: break-word;
+}
+
+.subtitulo {
+  text-align: center;
+  font-size: 1.2em;
+  margin: 1px;
+  word-wrap: break-word;
+}
+
+.footer {
+  text-align: center;
+  font-size: 0.9em;
+  font-weight: bold;
+}
+
+.cabecera {
+  text-align: left;
+  font-size: 13px;
+  background-color: #eeeeee;
+  border: 1px solid black;
+  padding: 3px; 5px;
+}
+
+.cabecerados {
+  text-align: left;
+  font-size: 13px;
+  border-left: 1px solid black;
+  border-bottom: 1px solid black;
+  padding: 3px 5px;
+}
+
+.textonormal {
+  font-size: 12px;
+  text-align: justify;
+}
+
+.alaizquierda {
+  text-align: justify;
+}
+
+
+/* .textogirado {
+  -webkit-transform: rotate(-90deg);
+  -moz-transform: rotate(-90deg);
+} */
+
+/* ========================== */
+/* Para las tablas de resumen */
+/* ========================== */
+
+.tabla {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size:12px;
+	text-align: right;
+        table-layout:fixed;
+}
+
+.tabla th { /* celdas nombres del alumnado */
+	background-color: #eeeeee;
+        border: 1px solid black;
+        vertical-align: bottom;
+        height: 150px;
+}
+
+.tabla th.ceroth { /* celda superior izquierda */
+       padding-bottom: 2em; 
+       font-size:20px;
+       width: 25%;
+       max-width: 25%;
+       background-color: transparent;
+       border: 0px solid black;
+       vertical-align: middle;
+}
+
+.tabla td { /* celdas normales */
+       background-color: transparent;
+       border: 0px solid black;
+       vertical-align: middle;
+       text-align: center;
+       /* border-bottom: 1px solid black; */
+} 
+
+.tabla td.impartd { /* celdas normales con datos, impares. */
+       background-color: #dddddd;  	
+}
+
+.tabla td.cerotd { /* celdas primera columna */
+       font-size: 12px;
+       width: 25%;
+       text-align: right;
+       border: 1px solid black;
+       font-weight: bold;
+}
+
+.tabla td.ceroimpartd { /* celdas primera columna impares */
+       font-size: 12px;
+       background-color: #dddddd; 
+       width: 25%;
+       text-align: right;
+       border: 1px solid black;
+       font-weight: bold;
+}
+
+/* ======================================= */
+
+.tablaest {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size:11px;
+	text-align: right;
+	table-layout:fixed;
+}
+
+.tablaest th { /* celdas nombres del alumnado */
+	background-color: #eeeeee;
+        border: 1px solid black;
+        vertical-align: bottom;
+        height: 150px;
+}
+
+.tablaest th.ceroth { /* celda superior izquierda */
+       padding-bottom: 2em; 
+       font-size:20px;
+       width: 25%;
+       max-width: 25%;
+       background-color: transparent;
+       border: 0px solid black;
+       vertical-align: middle;
+}
+
+.tablaest td { /* celdas normales */
+       background-color: transparent;
+       border: 0px solid black;
+       vertical-align: middle;
+       text-align: center;
+       /* border-bottom: 1px solid black; */
+} 
+.tablaest td.impartd { /* celdas normales con datos, impares. */
+       background-color: #dddddd;  	
+}
+
+.tablaest td.cerotd { /* celdas primera columna */
+       font-size: 11px;
+       width: 25%;
+       text-align: right;
+       border: 1px solid black;
+       font-weight: bold;
+}
+
+.tablaest td.ceroimpartd { /* celdas primera columna impares */
+       font-size: 11px;
+       background-color: #dddddd; 
+       width: 25%;
+       text-align: right;
+       border: 1px solid black;
+       font-weight: bold;
+}
+
+/* ======================================= */
+
+.tabla2 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size:26px;
+	text-align: right;
+	table-layout:fixed;
+}
+
+.tabla2 th { /* celdas nombres del alumnado */
+	background-color: #eeeeee;
+        border: 1px solid black;
+        vertical-align: middle;
+	font-size:16px;
+        height: 30px;
+}
+
+.tabla2 th.ceroth { /* celda superior izquierda */
+       padding-bottom: 2em; 
+       font-size:20px;
+       /* width: 25%; */
+       max-width: 25%;
+       background-color: transparent;
+       border: 0px solid black;
+       vertical-align: middle;
+}
+
+.tabla2 td { /* celdas normales */
+       background-color: transparent;
+       border: 0px solid black;
+       vertical-align: middle;
+       text-align: left;
+       font-size: 20px;
+       /* border-bottom: 1px solid black; */
+} 
+
+.tabla2 td.estadisticas { /* celdas normales */
+       background-color: transparent;
+       border: 2px solid black;
+       vertical-align: middle;
+       text-align: left;
+       font-size: 14px;
+       font-weight: bold;
+       /* border-bottom: 1px solid black; */
+} 
+
+.tabla2 td.impartd { /* celdas normales con datos, impares. */
+       background-color: #dddddd;  	
+}
+
+.tabla2 td.cerotd { /* celdas primera columna */
+       font-size: 16px;
+       /* width: 25%; */
+       text-align: right;
+       border: 1px solid black;
+       font-weight: bold;
+}
+
+.tabla2 td.ceroimpartd { /* celdas primera columna impares */
+       font-size: 16px;
+       background-color: #dddddd; 
+       /* width: 25%; */
+       text-align: right;
+       border: 1px solid black;
+       font-weight: bold;
+}

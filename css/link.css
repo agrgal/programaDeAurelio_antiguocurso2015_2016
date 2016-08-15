@@ -1,0 +1,21 @@
+/* CSS Document */
+
+#informacion a {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	color: #008800;
+	font-weight: bold;
+	font-size: 1em;	
+	text-decoration: none;
+}
+
+#informacion a:hover {
+	color: #5D3E07;
+}
+
+#informacion a:first-letter {
+	color: #FFFFFF;
+}
+
+#informacion a:visited {
+	color: #008800;
+}

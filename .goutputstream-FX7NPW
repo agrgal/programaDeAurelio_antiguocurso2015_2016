@@ -1,0 +1,91 @@
+<?php
+include("./funciones/funciones.php"); /* incluye el directorio de funciones */
+include_once("./clases/class.micalendario.php");
+$calendario= New micalendario(); // variable de calendario.
+
+/* $bd="encyclonumber"; */ //debe de haberse cargado en mysql_inc.php
+
+session_start(); /* empiezo una sesión */
+
+if ($_SESSION['administracion']<1) {
+   echo header("Location: ./index.php");
+}
+
+// Si es el administrador, para que pueda tener un profesor
+if ($_SESSION['administracion']==3) 
+   {$_SESSION['profesor']=dado_Id($bd,"31667329D","idprofesor","tb_profesores","DNI");} //me pongo yo
+
+// Haber rellenado antes los datos iniciales..
+if (isset($_SESSION['evaluacion']) && isset($_SESSION['asignacion']) && isset($_SESSION['profesor'])) { //si se han activado todas las variables de sesión
+   $visualizacion=1;
+} else { header ("Location: ./guardarasignaciones.php");}
+
+// obtiene arrays, por si hay que usarlos más de una vez
+$alumno=obteneralumnosasignacion($bd,$_SESSION['asignacion']); // array para introducir datos de los alumnos
+$ii=count($alumno['idalumno']);
+$items=obteneritems($bd);
+
+if (!isset($_SESSION['contador'])) {$_SESSION['contador']=0;} 
+if (isset($_POST['contador']) && $_POST['contador']>=0) {$_SESSION['contador']=$_POST['contador'];}
+
+// Ahora sí, reconocimiento de botones
+if (isset($_POST['boton']) && $_POST['boton']=='Primero') {$_SESSION['contador']=0;}
+if (isset($_POST['boton']) && $_POST['boton']=='Atrás') {$_SESSION['contador']--;}
+if (isset($_POST['boton']) && $_POST['boton']=='Adelante') {$_SESSION['contador']++;}
+if (isset($_POST['boton']) && $_POST['boton']=='Último') {$_SESSION['contador']=1000;}
+if (isset($_POST['boton']) && $_POST['boton']=='Grabar') {$_SESSION['contador']=$_SESSION['contador'];}
+
+$iz = "left: 300px;" ; // posición de los campos a la izquierda
+
+?>
+<html>
+<head>
+<title>Introduce datos del alumnado</title>
+
+<meta http-equiv="Content-Type" content="text/html;">
+<script language="javascript" type="text/javascript" src="./tinymce/jscripts/tiny_mce/tiny_mce.js"> </script>
+<script language="javascript" type="text/javascript">
+tinyMCE.init({
+        // General options
+        mode : "textareas",
+        theme : "advanced",
+        language: 'es',
+        plugins : "autoresize,autolink,lists,spellchecker,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
+        width: '100%',
+        height: 150,
+        autoresize_min_height: 100,
+        autoresize_max_height: 300,
+
+        // Theme options
+        theme_advanced_buttons1 : "bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,forecolor,backcolor,|,search,replace,|,bullist,numlist,|,outdent,indent,blockquote,|,undo,redo,|,link,unlink,anchor,cleanup,help,code,|,insertdate,inserttime,preview,|,charmap,|,sub,sup,",
+        theme_advanced_buttons2 : "formatselect,fontselect,fontsizeselect",
+        theme_advanced_toolbar_location : "top",
+        theme_advanced_toolbar_align : "justify",
+        theme_advanced_statusbar_location : "bottom",
+        theme_advanced_resizing : true,
+
+        // Skin options
+        skin : "default",
+        // skin : "o2k7",
+        // skin_variant : "silver",
+
+        // Example content CSS (should be your site CSS)
+        content_css : "./css/paratinymce.css",
+        theme_advanced_font_sizes: "10px,12px,13px,14px,16px,18px,20px",
+        font_size_style_values : "10px,12px,13px,14px,16px,18px,20px",
+
+        // Drop lists for link/image/media/template dialogs
+        template_external_list_url : "js/template_list.js",
+        external_link_list_url : "js/link_list.js",
+        external_image_list_url : "js/image_list.js",
+        media_external_list_url : "js/media_list.js",
+
+        // disparador de un evento on change
+        handle_event_callback : "grabarcadena",  
+
+        // función que limita el número de caracteres
+        setup : function(ed) {
+	ed.onKeyUp.add(function(ed, e) {
+	txt = tinyMCE.activeEditor.getContent();
+
+	var strip = (tinyMCE.activeEditor.getContent()).replace(/(<([^>]+)>)/ig,

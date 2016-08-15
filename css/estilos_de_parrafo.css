@@ -1,0 +1,51 @@
+#informacion p {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	text-align: justify;
+	color: #000011;
+	font-weight: bold;
+	font-size: 1.2em;	
+	margin: 15px 20px 0px 30px;
+}
+
+#presentardatos p {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	text-align: justify;
+	color: #000011;
+	font-weight: 300;
+	font-size: 1.2em;	
+	margin: 15px 10px 0px 15px;
+	text-indent: 0.5em;
+}
+
+/* #informacion p:first-letter {
+	color: #00FF00;
+	font-size: 1.3em;	
+} */
+	
+#menu p {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	text-align: justify;
+	color: #333333;
+	font-weight: bolder;
+	font-size: 2em;	
+	margin: 6px 0px 0px 10px;
+}
+
+#estado p {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	text-align: center;
+	color: #CCFF99;
+	font-weight: bold;
+	font-size: 1.3em;	
+	margin: 8px 0px 0px 10px; 
+}
+
+#fecha p {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	text-align: left;
+	color: #115599;
+	font-weight: bold;
+	font-size: 1.3em;	
+	margin: 8px 0px 0px 10px;
+}
+

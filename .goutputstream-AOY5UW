@@ -1,0 +1,222 @@
+<?php
+include("./funciones/funciones.php"); /* incluye el directorio de funciones */
+include_once("./clases/class.micalendario.php");
+$calendario= New micalendario(); // variable de calendario.
+
+/* $bd="encyclonumber"; */ //debe de haberse cargado en mysql_inc.php
+
+$iz = "left: 120px;" ; // posición de los campos a la izquierda
+
+session_start(); /* empiezo una sesión */
+
+if ($_SESSION['administracion']<1) {
+   echo header("Location: ./index.php");
+}
+
+// Haber rellenado antes los datos iniciales..
+if (isset($_SESSION['asignacion']) && isset($_SESSION['profesor'])) { // No es necesaria la evaluación
+// if (isset($_SESSION['evaluacion']) && isset($_SESSION['asignacion']) && isset($_SESSION['profesor'])) { //si se han activado todas las variables de sesión
+   $visualizacion=1;
+} else { header ("Location: ./guardarasignaciones.php");}
+
+// obtiene arrays, por si hay que usarlos más de una vez
+$infasignacion=obtenerdatosasignacion($bd,$_SESSION['asignacion']);
+$alumnos=obteneralumnosasignacion($bd,$_SESSION['asignacion']); 
+$ii=count($alumnos['idalumno']);
+// $items=obteneritems($bd);
+
+if (!isset($_SESSION['contador'])) {$_SESSION['contador']=0;} 
+if (isset($_POST['contador'])) {$_SESSION['contador']=$_POST['contador'];}
+
+// Ahora sí, reconocimiento de botones
+if (isset($_SESSION['contador']) && $_SESSION['contador']<0) {$_SESSION['contador']=0;}
+if (isset($_SESSION['contador']) && $_SESSION['contador']>($ii-1)) {$_SESSION['contador']=($ii-1);}
+// El último es la cuenta menos 1, ya que empieza en cero.
+
+?>
+<html>
+<head>
+<title>Anotaciones sobre los alumnos/a de mi asignación</title>
+<meta http-equiv="Content-Type" content="Type=text/html; charset=iso-8859-15">
+
+<!-- Incluir el script jquery -->
+<script language="javascript" src="./funciones/jquery-1.9.1.js"></script>
+<script src="./funciones/jquery-ui-1.10.2.custom.js"></script>
+<script src="./funciones/ui.datepicker-es.js"></script>
+
+<script language="javascript">
+
+  $(document).ready(function(){ // principio del document ready  
+
+    var xx=0; var yy=0; 
+    
+    // ============================================= 
+    // A) Recorrer los distintos valores de alumnado
+    // =============================================   
+    $("#primero").click(function(e){ //pulso en PRIMERO
+       $("#contador").val("0");
+       $('#fanotacion').submit();
+    });
+    $("#atras").click(function(e){ // pulso en ANTERIOR
+       var valor = $("#contador").val();
+       valor = parseInt(valor)-1;
+       $("#contador").val(valor);
+       $('#fanotacion').submit();
+    });
+    $("#siguiente").click(function(e){ // pulso en SIGUIENTE
+       var valor = $("#contador").val();
+       valor = parseInt(valor)+1;
+       $("#contador").val(valor);
+       $('#fanotacion').submit();
+    });
+    $("#ultimo").click(function(e){ // pulso en ÚLTIMO
+       $("#contador").val("1000");
+       $('#fanotacion').submit();
+    });
+
+    // ======================================================= 
+    // B) Al cargar la página, recarga la lista de anotaciones
+    // ======================================================= 
+    $(window).load(function() {
+      muestraanotaciones();
+    });
+
+    // ======================================================= 
+    // C) Al pulsar sobre la tabla, detecta si lo hemos hecho
+    //    sobre la papelera o sobre editar. Hay que hacerlo así porque, 
+    //    al generar la tabla dinámicamente, no detecta img como objeto ¿¿??
+    // ======================================================= 
+    $("#tabladatos").click(function(e){ 
+        var parentTR = $(e.target).closest('tr'); // Get the parent row
+        var textoanotacion = $("td[class='textoanotacion']", parentTR).html(); // Retrieve the id content
+        // var textoanotacion = $("td[class='textoanotacion']", parentTR).css("alt"); // Retrieve the id content
+        var textofecha = $("td[class='textofecha']", parentTR).html(); // Retrieve the id content
+        /* // var columna = parentTR 
+        var columna = $('td', parentTR).index(e.target);
+        // var columna = $(this).parent().children().index($(this)); 
+        alert(id + " -- " + columna); */
+        var identificacion = $(e.target).attr("id");
+        var nombre = $(e.target).attr("name");
+        if (nombre=="papelera") { borrar(identificacion,textoanotacion); }
+        if (nombre=="editar") { editar(identificacion,textofecha,textoanotacion); }
+    });
+
+    // ======================================================= 
+    // D) Al pulsar sobre la papelera, borra el dato.
+    // ======================================================= 
+    function borrar(idn,textoanotacion) {
+         // alert(idn);
+         if (confirm("¿Estas seguro de borrar el dato "+idn+": '"+textoanotacion+"' ?")) {
+	 var posting = $.post( "./anotaciones/borraranotaciones.php", { 
+             id: idn,
+         });
+         posting.done(function(data,status){
+                // alert (status);
+                if (status=="success") {
+                   muestraanotaciones(); // vuelve a mostrar la tabla
+                } else {
+                   alert("El procedimiento ha fallado");
+                }
+         });
+         } // fin de la confirmación
+     }
+
+    // ======================================================= 
+    // E) Al pulsar sobre editar, prepara la edición del dato.
+    // ======================================================= 
+    function editar(idn,fecha,textoanotacion) {
+         // alert(idn+"  "+fecha+"  "+textoanotacion);
+         // valores en la edición
+         $('#fechados').val(fecha);
+         tinyMCE.get("textanotacion").setContent(textoanotacion);
+         // cambiar el onclick del botón      
+            $("#insertareditar").html("Guardar anotación");
+            $("#insertareditar").attr("onClick","insertar('"+idn+"');");
+            $("#atab1").html('&nbsp;Editar la asignación "'+idn+'"');
+         // Muestra lo que pone 
+            $("#atab1").click(); // simulo el click en el tab
+    }
+
+    // ======================================================================== 
+    // F) Si pulso sobre mostrar datos, inicializo la edición como introducción
+    // ========================================================================
+    $("#atab2").click(function() {
+      // alert("He de inicializar la pestaña de edición o introducción de datos");
+      $("#insertareditar").html("Nueva anotación");
+      $("#insertareditar").attr("onClick","insertar('');");
+      $("#atab1").html('&nbsp;Insertar asignación');
+      $('#fechados').val("");
+      tinyMCE.get("textanotacion").setContent("");
+    });    
+
+    $("#atab1").click(function() {
+        var fechaini = $('#fechados').val();
+        if (fechaini=="") {
+	   $("#fechados").datepicker('setDate', new Date());
+        }
+    });
+
+    // ======================================================= 
+    // G) On focus, aparece también el data picker
+    // ======================================================= 
+    $('input').filter('.datepick').mouseover(function(){
+	$(this).datepicker("show");
+    });
+
+    $('#fechaini').change(function(){
+	muestraanotaciones();
+    });
+
+    $('#fechafinal').change(function(){
+	muestraanotaciones();
+    });
+    // ========================================================== 
+    // H) Al cambiar el alumno en el select, aparece en la página
+    // ========================================================== 
+    // 
+    $("#alumnado2").click(function(){ // Pulso sobre el nombre y aparece la lista de ellos
+        $("#seleccion").val($("#contador").val()); // el valor de la seleccion es el del contador
+        $("#nombresalumnos").slideToggle("slow");
+    });
+
+    $("#seleccion").change(function(){ // al cambiar el select de nombres de alumnado
+        $("#contador").val(($("#seleccion").val())); // valor del contador, el de la seleccion
+        $('#fanotacion').submit(); // recarga la página
+    });
+
+    // ============================================================== 
+    // I) Llamo a jquery ui para poner el div tabs como de pestañas
+    // ============================================================== 
+    $("#tabs").tabs();
+
+    // ============================================================== 
+    // J) Define el calendario en el imput de fecha
+    // ============================================================== 
+    $('input').filter('.datepick').datepicker(cleanDatepicker(),{ // lo define por la clase de los inputs
+	    changeMonth: true,
+	    changeYear: true,
+	    showOn: 'button',
+	    buttonImage: 'imagenes/otros/fecha.png',
+            alignment: 'topRight',
+	    buttonImageOnly: true,
+            yearRange: '-1:+1',
+            showButtonPanel: true, 
+            closeText: 'Clear', 
+	   });
+
+    $("img[class='ui-datepicker-trigger']").each(function()  { // estilo del botón de la fecha
+         $(this).attr('style', 'position:relative; top:12px; left:10px; width:30px; height: 30px;');
+    });
+
+     accepted
+	
+
+function cleanDatepicker() {
+   var old_fn = $.datepicker._updateDatepicker;
+
+   $.datepicker._updateDatepicker = function(inst) {
+      old_fn.call(this, inst);
+
+      var buttonPane = $(this).datepicker("widget").find(".ui-datepicker-buttonpane");
+
+      $("<button type='button' class='ui-datepicker-clean ui-state-default ui-priority-primary ui-corner-all'>Usu
